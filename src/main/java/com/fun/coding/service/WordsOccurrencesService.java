@@ -106,6 +106,3 @@ public class WordsOccurrencesService {
   }
 
 }
-
-// https://www2.cs.duke.edu/csed/code/code2007/solutions/java/javacode.pdf
-// https://codereview.stackexchange.com/questions/48198/count-frequency-of-words-in-a-given-file

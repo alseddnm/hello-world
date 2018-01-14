@@ -120,11 +120,4 @@ public class DeadLocks {
       // Ignore it
     }
   }
-  //http://korhner.github.io/java/multithreading/detect-java-deadlocks-programmatically/
-  // https://www.javaspecialists.eu/archive/Issue130.html
-  // https://stackoverflow.com/questions/1102359/programmatic-deadlock-detection-in-java
-  // http://www.java2s.com/Code/Java/Development-Class/PerformingdeadlockdetectionprogrammaticallywithintheapplicationusingthejavalangmanagementAPI.htm
-  // https://andreabergia.com/java-detecting-deadlocks/
-
-  // stopping threads https://stackoverflow.com/questions/10961714/how-to-properly-stop-the-thread-in-java
 }

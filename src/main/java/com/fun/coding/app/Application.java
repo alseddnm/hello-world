@@ -38,5 +38,4 @@ public class Application {
 
     };
   }
-// https://stackoverflow.com/questions/40384056/consider-defining-a-bean-of-type-package-in-your-configuration-spring-boot
 }

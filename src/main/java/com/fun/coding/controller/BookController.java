@@ -71,6 +71,4 @@ public class BookController {
     throw new BookNotFoundException(bookId);
   }
 
-// https://stackoverflow.com/questions/29808051/spring-boot-annotation-autowired-of-service-fails
-  // https://spring.io/guides/tutorials/bookmarks/
 }
