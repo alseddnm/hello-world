@@ -22,7 +22,7 @@ public class DeadLocks {
 
   private static Logger LOGGER = LoggerFactory.getLogger(DeadLocks.class);
   private final int monitorEvery = 5; // run the monitor service every 5 seconds. Should be configurable.
-  private ScheduledExecutorService monitorService = Executors.newScheduledThreadPool(1);
+  private ScheduledExecutorService deadlockDetector = Executors.newScheduledThreadPool(1);
   private Object lock1 = new Object();
   private Object lock2 = new Object();
 
@@ -56,13 +56,9 @@ public class DeadLocks {
     @Override
     public void run() {
       synchronized (lock2) {
-        LOGGER.info("Thread2 acquired lock2");
-        try {
-          TimeUnit.MILLISECONDS.sleep(50);
-        } catch (InterruptedException ignore) {
-        }
+        System.out.println("Thread2 acquired lock2");
         synchronized (lock1) {
-          LOGGER.info("Thread2 acquired lock1");
+          System.out.println("Thread2 acquired lock1");
         }
       }
     }
@@ -78,7 +74,7 @@ public class DeadLocks {
       thread2.start();
 
       // monitor job will start after 2 seconds and run every 5 seconds.
-      monitorService.scheduleAtFixedRate(new MonitorThread(), 2, monitorEvery, TimeUnit.SECONDS);
+      deadlockDetector.scheduleAtFixedRate(new MonitorThread(), 2, monitorEvery, TimeUnit.SECONDS);
     } catch (InterruptedException e) {
       LOGGER.error("Interrupted while starting the Monitor thread.");
     } finally {
@@ -113,21 +109,30 @@ public class DeadLocks {
   /**
    *
    */
-  private void stop() {
+  private void stopDeadLockThreads() {
     try {
-      LOGGER.info("Stopping threads.");
+      LOGGER.info("Stopping deadlock threads");
       if (thread1 != null) {
-        LOGGER.info("Stopping thread1.");
         thread1.interrupt();
         thread1.join();
       }
       if (thread2 != null) {
-        LOGGER.info("Stopping thread2.");
         thread2.interrupt();
         thread2.join();
       }
-      monitorService.shutdownNow();
-      monitorService.awaitTermination(5, TimeUnit.SECONDS);
+    } catch (InterruptedException e) {
+      LOGGER.info("Interrupted while stopping");
+    }
+  }
+
+  /**
+   *
+   */
+  public void shutdown() {
+    try {
+      LOGGER.info("shutdown deadLock detector");
+      deadlockDetector.shutdownNow();
+      deadlockDetector.awaitTermination(5, TimeUnit.SECONDS);
     } catch (InterruptedException e) {
       LOGGER.info("Interrupted while stopping");
     }
@@ -142,15 +147,14 @@ public class DeadLocks {
       try {
         threadLock.acquire();
         ThreadMXBean bean = ManagementFactory.getThreadMXBean();
-        long[] threadIds = bean.findDeadlockedThreads(); // Returns null if no threads are deadlocked
+        long[] threadIds = bean.findDeadlockedThreads();
         if (threadIds != null) {
           ThreadInfo[] info = bean.getThreadInfo(threadIds);
           logDeadlockAndQuit(bean, threadIds, info);
-          stop();
+          stopDeadLockThreads();
         } else {
           LOGGER.info("NO deadlocks");
         }
-        threadLock.release();
       } catch (InterruptedException ie) {
         LOGGER.error("Monitor Thread got interrupted.", ie);
       } finally {
