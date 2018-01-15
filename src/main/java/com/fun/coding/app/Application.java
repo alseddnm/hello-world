@@ -14,7 +14,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 /**
  * Created by nizar on 1/10/18.
  */
-@SpringBootApplication(scanBasePackages = {"com.fun.coding", "com.fun.coding.repository", "com.fun.coding.model"})
+@SpringBootApplication(scanBasePackages = {"com.fun.coding", "com.fun.coding.repository", "com.fun.coding.model", "com.fun.coding.deadlock"})
 @EntityScan({"com.fun.coding.model", "com.fun.coding.controller"})
 @EnableJpaRepositories("com.fun.coding.repository")
 public class Application {

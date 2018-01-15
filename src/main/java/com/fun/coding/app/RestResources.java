@@ -13,6 +13,7 @@ import com.fun.coding.service.FibonacciService;
 import com.fun.coding.service.WordsOccurrencesService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,6 +28,13 @@ public class RestResources {
   private static final Logger LOGGER = LoggerFactory.getLogger(RestResources.class);
 
   private static final String template = "Result= %s!";
+
+  private final DeadLocks deadLocks;
+
+  @Autowired
+  public RestResources(DeadLocks deadLocks) {
+    this.deadLocks = deadLocks;
+  }
 
   @RequestMapping("/healthcheck")
   public String healthCheck() {
@@ -48,8 +56,8 @@ public class RestResources {
 
   @RequestMapping("/monitor/deadlock")
   public ResponseEntity<String> monitorDeadLocks() {
-    DeadLocks.startThreads();
-    String result = DeadLocks.monitorDeadlocks();
+    deadLocks.startAndMonitorThreads();
+    String result = deadLocks.getMessage();
     return new ResponseEntity<String>(result, HttpStatus.OK);
   }
 
