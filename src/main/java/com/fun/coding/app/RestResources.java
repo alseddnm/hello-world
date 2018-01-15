@@ -56,9 +56,8 @@ public class RestResources {
 
   @RequestMapping("/monitor/deadlock")
   public ResponseEntity<String> monitorDeadLocks() {
-    deadLocks.startAndMonitorThreads();
-    String result = deadLocks.getMessage();
-    return new ResponseEntity<String>(result, HttpStatus.OK);
+    deadLocks.start();
+    return new ResponseEntity<String>("Monitoring...!", HttpStatus.OK);
   }
 
 

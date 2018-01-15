@@ -21,7 +21,7 @@ import org.springframework.stereotype.Component;
 public class DeadLocks {
 
   private static Logger LOGGER = LoggerFactory.getLogger(DeadLocks.class);
-  private final int monitorEvery = 5; // run the monitor service every 5 seconds. Should be configurable.
+  private final int monitorEvery = 60; // run the monitor service every 5 seconds. Should be configurable.
   private ScheduledExecutorService deadlockDetector = Executors.newScheduledThreadPool(1);
   private Object lock1 = new Object();
   private Object lock2 = new Object();
@@ -67,14 +67,14 @@ public class DeadLocks {
   /**
    *
    */
-  public void startAndMonitorThreads() {
+  public void start() {
     try {
       threadLock.acquire();
       thread1.start();
       thread2.start();
 
       // monitor job will start after 2 seconds and run every 5 seconds.
-      deadlockDetector.scheduleAtFixedRate(new MonitorThread(), 2, monitorEvery, TimeUnit.SECONDS);
+      deadlockDetector.scheduleAtFixedRate(new DeadLockDetectorThread(), 2, monitorEvery, TimeUnit.SECONDS);
     } catch (InterruptedException e) {
       LOGGER.error("Interrupted while starting the Monitor thread.");
     } finally {
@@ -110,25 +110,26 @@ public class DeadLocks {
    *
    */
   private void stopDeadLockThreads() {
-    try {
+    // try {
       LOGGER.info("Stopping deadlock threads");
       if (thread1 != null) {
         thread1.interrupt();
-        thread1.join();
+        //thread1.join();
       }
       if (thread2 != null) {
         thread2.interrupt();
-        thread2.join();
+        // thread2.join();
       }
-    } catch (InterruptedException e) {
-      LOGGER.info("Interrupted while stopping");
-    }
+    LOGGER.info("STOPPED");
+//    } catch (InterruptedException e) {
+//      LOGGER.info("Interrupted while stopping");
+//    }
   }
 
   /**
    *
    */
-  public void shutdown() {
+  public void stop() {
     try {
       LOGGER.info("shutdown deadLock detector");
       deadlockDetector.shutdownNow();
@@ -141,7 +142,7 @@ public class DeadLocks {
   /**
    *
    */
-  private class MonitorThread implements Runnable {
+  private class DeadLockDetectorThread implements Runnable {
     @Override
     public void run() {
       try {
@@ -151,7 +152,8 @@ public class DeadLocks {
         if (threadIds != null) {
           ThreadInfo[] info = bean.getThreadInfo(threadIds);
           logDeadlockAndQuit(bean, threadIds, info);
-          stopDeadLockThreads();
+          LOGGER.info("Shutting Down the Service due to deadlock problem...!");
+          System.exit(0);
         } else {
           LOGGER.info("NO deadlocks");
         }
