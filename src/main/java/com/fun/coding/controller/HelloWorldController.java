@@ -1,4 +1,4 @@
-package com.fun.coding.app;
+package com.fun.coding.controller;
 
 /**
  * Created by nizar on 1/10/18.
@@ -23,16 +23,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class RestResources {
+public class HelloWorldController {
 
-  private static final Logger LOGGER = LoggerFactory.getLogger(RestResources.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger(HelloWorldController.class);
 
   private static final String template = "Result= %s!";
 
   private final DeadLocks deadLocks;
 
   @Autowired
-  public RestResources(DeadLocks deadLocks) {
+  public HelloWorldController(DeadLocks deadLocks) {
     this.deadLocks = deadLocks;
   }
 
