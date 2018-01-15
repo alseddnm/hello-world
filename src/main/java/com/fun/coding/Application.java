@@ -1,4 +1,4 @@
-package com.fun.coding.app;
+package com.fun.coding;
 
 import java.util.Arrays;
 import org.slf4j.Logger;
@@ -15,7 +15,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
  * Created by nizar on 1/10/18.
  */
 @SpringBootApplication(scanBasePackages = {"com.fun.coding", "com.fun.coding.repository", "com.fun.coding.model", "com.fun.coding.deadlock"})
-@EntityScan({"com.fun.coding.model", "com.fun.coding.controller"})
+@EntityScan({"com.fun.coding.model", "com.fun.coding.rest"})
 @EnableJpaRepositories("com.fun.coding.repository")
 public class Application {
   private static final Logger LOGGER = LoggerFactory.getLogger(Application.class);

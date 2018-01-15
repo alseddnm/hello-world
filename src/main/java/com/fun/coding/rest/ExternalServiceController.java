@@ -1,4 +1,4 @@
-package com.fun.coding.controller;
+package com.fun.coding.rest;
 
 import java.util.List;
 import com.fun.coding.model.User;
@@ -17,11 +17,6 @@ import org.springframework.web.client.RestTemplate;
 public class ExternalServiceController {
 
   final String uri = "https://jsonplaceholder.typicode.com/posts";
-
-  @RequestMapping("/healthcheck")
-  public String healthCheck() {
-    return "Ok...!";
-  }
 
   @RequestMapping(method = RequestMethod.GET)
   public ResponseEntity<List<User>> listUsers() {

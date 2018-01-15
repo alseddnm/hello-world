@@ -1,4 +1,4 @@
-package com.fun.coding.controller;
+package com.fun.coding.rest;
 
 
 import com.fun.coding.exception.BookNotFoundException;
@@ -30,11 +30,6 @@ public class BookController {
   @Autowired
   public BookController(BookRepository bookmarkRepository) {
     this.bookmarkRepository = bookmarkRepository;
-  }
-
-  @RequestMapping("/healthcheck")
-  public String healthCheck() {
-    return "Ok...!";
   }
 
   @RequestMapping(method = RequestMethod.GET, value = "/{bookId}")
