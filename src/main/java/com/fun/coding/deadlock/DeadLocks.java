@@ -89,7 +89,7 @@ public class DeadLocks {
    * @param info
    */
   private void logDeadlockAndQuit(ThreadMXBean bean, long[] threadIds, ThreadInfo[] info) {
-    LOGGER.error("Threads in deadlocks: {}", Arrays.toString(threadIds));
+    LOGGER.error("Threads are stuck in deadlock state: {}", Arrays.toString(threadIds));
 
     for (ThreadInfo threadInfo : info) {
       LOGGER.error("Thread \"{}\" is waiting on lock \"{}\" taken by thread \"{}\"",
