@@ -27,8 +27,6 @@ public class BaseRestTest {
   protected MockMvc mockMvc;
 
   protected void setup() throws Exception {
-
-
   }
 
   /**
