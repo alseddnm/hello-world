@@ -87,7 +87,7 @@ public class HelloWorldControllerTest extends BaseRestTest{
     Text text =  new Text();
     text.setContent("coding is fun and yes coding is fun");
 
-    mockMvc.perform(post("/text")
+    mockMvc.perform(post("/words/occurrences")
       .content(json(text))
       .contentType(MediaType.APPLICATION_JSON)
       .accept(MediaType.APPLICATION_JSON))
