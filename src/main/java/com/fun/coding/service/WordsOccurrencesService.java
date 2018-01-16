@@ -45,12 +45,13 @@ public class WordsOccurrencesService {
   }
 
   /**
+   * This method parse the text
+   * The code assumes the that “space” is the only word delimiter
    * @param text
    * @param wordsMap
    */
   private static void addWordsToMap(String text, Map<String, WordCounter> wordsMap) {
     StringBuffer word = new StringBuffer();
-    // Could use java regex to parse the text, No need to add extra space
     for (int i = 0; i < text.length(); i++) {
       if (text.charAt(i) != SPACE) {
         word.append(text.charAt(i));
