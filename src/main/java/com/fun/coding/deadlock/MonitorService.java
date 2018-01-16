@@ -16,9 +16,9 @@ import org.springframework.stereotype.Component;
  * Created by nizar on 1/11/18.
  */
 @Component
-public class DeadLocks {
+public class MonitorService {
 
-  private static Logger LOGGER = LoggerFactory.getLogger(DeadLocks.class);
+  private static Logger LOGGER = LoggerFactory.getLogger(MonitorService.class);
   private final int monitorEvery = 60; // run the monitor service every 5 seconds. Should be configurable.
   private ScheduledExecutorService deadlockDetector = Executors.newScheduledThreadPool(1);
   private Object lock1 = new Object();

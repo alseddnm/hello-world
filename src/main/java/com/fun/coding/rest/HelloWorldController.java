@@ -5,7 +5,7 @@ package com.fun.coding.rest;
  */
 
 import java.util.List;
-import com.fun.coding.deadlock.DeadLocks;
+import com.fun.coding.deadlock.MonitorService;
 import com.fun.coding.model.FibonacciSeries;
 import com.fun.coding.model.Text;
 import com.fun.coding.model.WordCounter;
@@ -29,11 +29,11 @@ public class HelloWorldController {
 
   private static final String template = "Result= %s!";
 
-  private final DeadLocks deadLocks;
+  private final MonitorService monitorService;
 
   @Autowired
-  public HelloWorldController(DeadLocks deadLocks) {
-    this.deadLocks = deadLocks;
+  public HelloWorldController(MonitorService monitorService) {
+    this.monitorService = monitorService;
   }
 
   @RequestMapping("/")
@@ -56,7 +56,7 @@ public class HelloWorldController {
 
   @RequestMapping("/monitor")
   public ResponseEntity<String> monitorDeadLocks() {
-    deadLocks.start();
+    monitorService.start();
     return new ResponseEntity<String>("Monitoring...!", HttpStatus.OK);
   }
 
