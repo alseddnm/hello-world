@@ -1,9 +1,11 @@
 package com.fun.coding.model;
 
+import java.util.Objects;
+
 /**
  * Created by nizar on 1/13/18.
  */
-public class User {
+public class User implements Comparable<User>{
 
   private int userId;
 
@@ -23,6 +25,20 @@ public class User {
 
   public int getId() {
     return id;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    User user = (User) o;
+    return userId == user.userId &&
+      id == user.id;
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(userId, id);
   }
 
   public void setId(int id) {
@@ -45,4 +61,8 @@ public class User {
     this.body = body;
   }
 
+  @Override
+  public int compareTo(User o) {
+    return this.getId() - o.getId();
+  }
 }

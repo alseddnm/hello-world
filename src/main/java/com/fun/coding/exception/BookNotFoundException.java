@@ -11,6 +11,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 public class BookNotFoundException extends RuntimeException {
 
   public BookNotFoundException(int bookId) {
-    super("could not find book '" + bookId + "'.");
+    super("could not find book with isbn " + bookId + ".");
   }
 }

@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/books")
 public class BookController {
 
-  private static final Logger logger = LoggerFactory.getLogger(BookController.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger(BookController.class);
 
   private final BookRepository bookmarkRepository;
 
@@ -34,6 +34,7 @@ public class BookController {
 
   @RequestMapping(method = RequestMethod.GET, value = "/{bookId}")
   public ResponseEntity<Book> findBook(@PathVariable int bookId) {
+    LOGGER.debug("REST request to retrieve Book : {}", bookId);
     Book book = bookmarkRepository.findOne(bookId);
     if (book == null) {
       throw new BookNotFoundException(bookId);
@@ -43,6 +44,7 @@ public class BookController {
 
   @RequestMapping(method = RequestMethod.POST)
   public ResponseEntity<?> addBook(@RequestBody Book book) {
+    LOGGER.debug("REST request to create Book : {}", book.getIsbn());
     Book result = bookmarkRepository.save(book);
     if (result == null) {
       return ResponseEntity.noContent().build();
@@ -52,9 +54,10 @@ public class BookController {
 
   @RequestMapping(method = RequestMethod.DELETE, value = "/{bookId}")
   public ResponseEntity<?> deleteBook(@PathVariable int bookId) {
+    LOGGER.debug("REST request to delete Book : {}", bookId);
     try {
       bookmarkRepository.delete(bookId);
-      return new ResponseEntity<>("deleted book with ID = '" + bookId + "'.", HttpStatus.OK);
+      return new ResponseEntity<>("{\"isbn\": " + "" + bookId + "" +"}", HttpStatus.OK);
     } catch (EmptyResultDataAccessException e) {
       throw new BookNotFoundException(bookId);
     }

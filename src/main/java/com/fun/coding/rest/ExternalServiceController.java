@@ -2,6 +2,8 @@ package com.fun.coding.rest;
 
 import java.util.List;
 import com.fun.coding.model.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,7 +18,9 @@ import org.springframework.web.client.RestTemplate;
 @RequestMapping("/users")
 public class ExternalServiceController {
 
-  final String uri = "https://jsonplaceholder.typicode.com/posts";
+  private static final Logger LOGGER = LoggerFactory.getLogger(ExternalServiceController.class);
+
+  private final String uri = "https://jsonplaceholder.typicode.com/posts";
 
   @RequestMapping(method = RequestMethod.GET)
   public ResponseEntity<List<User>> listUsers() {
