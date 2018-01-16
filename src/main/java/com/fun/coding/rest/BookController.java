@@ -55,9 +55,10 @@ public class BookController {
   @RequestMapping(method = RequestMethod.DELETE, value = "/{bookId}")
   public ResponseEntity<?> deleteBook(@PathVariable int bookId) {
     LOGGER.debug("REST request to delete Book : {}", bookId);
+    final String result = "{\"isbn\": %d}";
     try {
       bookmarkRepository.delete(bookId);
-      return new ResponseEntity<>("{\"isbn\": " + "" + bookId + "" +"}", HttpStatus.OK);
+      return new ResponseEntity<>(String.format(result,bookId), HttpStatus.OK);
     } catch (EmptyResultDataAccessException e) {
       throw new BookNotFoundException(bookId);
     }

@@ -27,8 +27,6 @@ public class HelloWorldController {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(HelloWorldController.class);
 
-  private static final String template = "Result= %s!";
-
   private final MonitorService monitorService;
 
   @Autowired
