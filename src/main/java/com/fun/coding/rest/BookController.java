@@ -38,7 +38,7 @@ public class BookController {
     if (book == null) {
       throw new BookNotFoundException(bookId);
     }
-    return new ResponseEntity<Book>(book, HttpStatus.OK);
+    return new ResponseEntity<>(book, HttpStatus.OK);
   }
 
   @RequestMapping(method = RequestMethod.POST)
@@ -47,14 +47,14 @@ public class BookController {
     if (result == null) {
       return ResponseEntity.noContent().build();
     }
-    return new ResponseEntity<Book>(result, HttpStatus.CREATED);
+    return new ResponseEntity<>(result, HttpStatus.CREATED);
   }
 
   @RequestMapping(method = RequestMethod.DELETE, value = "/{bookId}")
   public ResponseEntity<?> deleteBook(@PathVariable int bookId) {
     try {
       bookmarkRepository.delete(bookId);
-      return new ResponseEntity<String>("deleted book with ID = '" + bookId + "'.", HttpStatus.OK);
+      return new ResponseEntity<>("deleted book with ID = '" + bookId + "'.", HttpStatus.OK);
     } catch (EmptyResultDataAccessException e) {
       throw new BookNotFoundException(bookId);
     }

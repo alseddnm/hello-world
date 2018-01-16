@@ -25,6 +25,6 @@ public class ExternalServiceController {
     if (result == null) {
       return ResponseEntity.noContent().build();
     }
-    return new ResponseEntity<List<User>>((List<User>) result, HttpStatus.OK);
+    return new ResponseEntity<>((List<User>) result, HttpStatus.OK);
   }
 }

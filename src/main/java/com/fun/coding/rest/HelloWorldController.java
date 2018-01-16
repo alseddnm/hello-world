@@ -45,19 +45,19 @@ public class HelloWorldController {
   @RequestMapping("/fibonacci/{number}")
   public ResponseEntity<FibonacciSeries> fib(@PathVariable(value = "number") int number) {
     List<Integer> fibonacciSeries = FibonacciService.buildFibonacciSeries(number);
-    return new ResponseEntity<FibonacciSeries>(new FibonacciSeries(number, fibonacciSeries), HttpStatus.OK);
+    return new ResponseEntity<>(new FibonacciSeries(number, fibonacciSeries), HttpStatus.OK);
   }
 
-  @RequestMapping(value = "/text", method = RequestMethod.POST)
+  @RequestMapping(value = "/words/count", method = RequestMethod.POST)
   public ResponseEntity<List<WordCounter>> wordOccurrences(@RequestBody Text text) {
     List<WordCounter> list = WordsOccurrencesService.parseAndSortWordsAlphabetically(text.getContent());
-    return new ResponseEntity<List<WordCounter>>(list, HttpStatus.OK);
+    return new ResponseEntity<>(list, HttpStatus.OK);
   }
 
   @RequestMapping("/monitor")
   public ResponseEntity<String> monitorDeadLocks() {
     monitorService.start();
-    return new ResponseEntity<String>("Monitoring...!", HttpStatus.OK);
+    return new ResponseEntity<>("Monitoring...!", HttpStatus.OK);
   }
 
 
