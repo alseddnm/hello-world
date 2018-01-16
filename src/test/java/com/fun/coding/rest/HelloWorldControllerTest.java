@@ -33,7 +33,7 @@ public class HelloWorldControllerTest extends BaseRestTest{
   public void helloWorldTest() throws Exception {
     mockMvc.perform(MockMvcRequestBuilders.get("/").accept(MediaType.APPLICATION_JSON))
       .andExpect(status().isOk())
-      .andExpect(content().string(equalTo("Hello World!")));
+      .andExpect(content().string(equalTo("Hello World!".trim())));
   }
 
   /**
@@ -52,7 +52,7 @@ public class HelloWorldControllerTest extends BaseRestTest{
 
     mockMvc.perform(get("/fibonacci/5").accept(MediaType.APPLICATION_JSON))
       .andExpect(status().isOk())
-      .andExpect(jsonPath("$.number", is((int) fibonacciSeries.getNumber())))
+      .andExpect(jsonPath("$.number", is(fibonacciSeries.getNumber())))
       .andExpect(jsonPath("$.seriesList[0]", is(fibonacciSeries.getSeriesList().get(0))))
       .andExpect(jsonPath("$.seriesList[1]", is(fibonacciSeries.getSeriesList().get(1))))
       .andExpect(jsonPath("$.seriesList[2]", is(fibonacciSeries.getSeriesList().get(2))))
