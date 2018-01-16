@@ -48,7 +48,7 @@ public class HelloWorldController {
     return new ResponseEntity<>(new FibonacciSeries(number, fibonacciSeries), HttpStatus.OK);
   }
 
-  @RequestMapping(value = "/words/count", method = RequestMethod.POST)
+  @RequestMapping(value = "/text", method = RequestMethod.POST)
   public ResponseEntity<List<WordCounter>> wordOccurrences(@RequestBody Text text) {
     List<WordCounter> list = WordsOccurrencesService.parseAndSortWordsAlphabetically(text.getContent());
     return new ResponseEntity<>(list, HttpStatus.OK);

@@ -11,17 +11,13 @@ import java.util.Objects;
  */
 public class WordCounter implements Comparable<WordCounter> {
 
-  private int count;
-
   private String word;
+
+  private int count;
 
   public WordCounter(String word) {
     this.count = 1;
     this.word = word;
-  }
-
-  public int getCount() {
-    return this.count;
   }
 
   public void incrementCount() {
@@ -32,6 +28,9 @@ public class WordCounter implements Comparable<WordCounter> {
     return word;
   }
 
+  public int getCount() {
+    return count;
+  }
 
   @Override
   public boolean equals(Object o) {
