@@ -29,6 +29,17 @@ repositories {
     mavenCentral()
 }
 
+task testRestAPIs(type: Test) {
+    include '**/BookControllerTest.class'
+    include '**/ExternalServiceControllerTest.class'
+    include '**/HelloWorldControllerTest.class'
+}
+
+task testServices(type: Test) {
+    include '**/FibonacciServiceTest.class'
+    include '**/WordsOccurrencesServiceTest.class'
+}
+
 dependencies {
     compile("org.springframework.boot:spring-boot-starter-web")
     testCompile("junit:junit")
