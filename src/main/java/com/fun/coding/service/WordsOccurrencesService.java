@@ -20,40 +20,6 @@ public class WordsOccurrencesService {
 
   private static final char SPACE = ' ';
 
-//  /**
-//   * You can use TreeMap as follow
-//   * @param text
-//   * @return
-//   */
-//  public static Map<String,Integer> wordCount(final String text) {
-//    // check for empty or null
-//    Map map = new TreeMap<>();  // word --> number of occurrences
-//
-//    StringBuffer word = new StringBuffer();
-//
-//    for(int i=0;i<text.length();i++){
-//      if(text.charAt(i)!=SPACE) {
-//        word.append(text.charAt(i));
-//        if(i+1==text.length() || text.charAt(i+1)==SPACE) {
-//          if(map.containsKey(word.toString())) {
-//            // word exist in the map,
-//            // increment its count by one
-//            Integer count = (Integer)map.get(word.toString());
-//            map.put(word.toString(), new Integer(count.intValue() + 1));
-//          } else {
-//            // Not seen this word.
-//            map.put(word.toString(), new Integer(1));
-//          }
-//        }
-//        continue;
-//      }
-//      word = new StringBuffer();
-//    }
-//
-//    return map;
-//
-//  }
-
   /**
    * This method returns List of WordCounter sorted alphabetically.
    * If null/empty will return an empty list.

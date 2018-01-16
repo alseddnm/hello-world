@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
  * Created by nizar on 1/13/18.
  */
 @RestController
-@RequestMapping("/book")
+@RequestMapping("/books")
 public class BookController {
 
   private static final Logger logger = LoggerFactory.getLogger(BookController.class);
