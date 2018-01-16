@@ -10,13 +10,11 @@ import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 /**
  * Created by nizar on 1/11/18.
  */
-@Scope(value = "singleton")
 @Component
 public class DeadLocks {
 
@@ -109,26 +107,6 @@ public class DeadLocks {
   /**
    *
    */
-  private void stopDeadLockThreads() {
-    // try {
-      LOGGER.info("Stopping deadlock threads");
-      if (thread1 != null) {
-        thread1.interrupt();
-        //thread1.join();
-      }
-      if (thread2 != null) {
-        thread2.interrupt();
-        // thread2.join();
-      }
-    LOGGER.info("STOPPED");
-//    } catch (InterruptedException e) {
-//      LOGGER.info("Interrupted while stopping");
-//    }
-  }
-
-  /**
-   *
-   */
   public void stop() {
     try {
       LOGGER.info("shutdown deadLock detector");
@@ -158,11 +136,10 @@ public class DeadLocks {
           LOGGER.info("NO deadlocks");
         }
       } catch (InterruptedException ie) {
-        LOGGER.error("Monitor Thread got interrupted.", ie);
+        LOGGER.error("DeadLock Detector Thread got interrupted.", ie);
       } finally {
         threadLock.release();
       }
     }
   }
-// https://stackoverflow.com/questions/10961714/how-to-properly-stop-the-thread-in-java
 }

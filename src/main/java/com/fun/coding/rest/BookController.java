@@ -54,16 +54,10 @@ public class BookController {
   public ResponseEntity<?> deleteBook(@PathVariable int bookId) {
     try {
       bookmarkRepository.delete(bookId);
+      return new ResponseEntity<String>("deleted book with ID = '" + bookId + "'.", HttpStatus.OK);
     } catch (EmptyResultDataAccessException e) {
       throw new BookNotFoundException(bookId);
     }
-
-    Book book = bookmarkRepository.findOne(bookId);
-    if (book == null) {
-      return new ResponseEntity<String>("deleted book with ID = '" + bookId + "'.", HttpStatus.OK);
-
-    }
-    throw new BookNotFoundException(bookId);
   }
 
 }
