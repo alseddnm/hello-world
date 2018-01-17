@@ -42,18 +42,21 @@ public class HelloWorldController {
 
   @RequestMapping("/fibonacci/{number}")
   public ResponseEntity<FibonacciSeries> fib(@PathVariable(value = "number") int number) {
+    LOGGER.debug("Rest call to create fibonacci numbers.");
     List<Integer> fibonacciSeries = FibonacciService.buildFibonacciSeries(number);
     return new ResponseEntity<>(new FibonacciSeries(number, fibonacciSeries), HttpStatus.OK);
   }
 
   @RequestMapping(value = "/words/occurrences", method = RequestMethod.POST)
   public ResponseEntity<List<WordCounter>> wordOccurrences(@RequestBody Text text) {
+    LOGGER.debug("Rest API to return words and number occurrences sorted alphabetically.");
     List<WordCounter> list = WordsOccurrencesService.parseAndSortWordsAlphabetically(text.getContent());
     return new ResponseEntity<>(list, HttpStatus.OK);
   }
 
   @RequestMapping("/monitor")
   public ResponseEntity<String> monitorDeadLocks() {
+    LOGGER.debug("Rest API to monitor and detect deadlock.");
     monitorService.start();
     return new ResponseEntity<>("Monitoring...!", HttpStatus.OK);
   }

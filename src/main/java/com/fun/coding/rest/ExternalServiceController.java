@@ -24,6 +24,7 @@ public class ExternalServiceController {
 
   @RequestMapping(method = RequestMethod.GET)
   public ResponseEntity<List<User>> listUsers() {
+    LOGGER.debug("Calling external service.");
     RestTemplate restTemplate = new RestTemplate();
     Object result = restTemplate.getForObject(uri, Object.class);
     if (result == null) {
