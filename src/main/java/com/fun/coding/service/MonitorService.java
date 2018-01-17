@@ -150,6 +150,7 @@ public class MonitorService implements IMonitorService {
           ThreadInfo[] info = bean.getThreadInfo(threadIds);
           logDeadlockAndQuit(bean, threadIds, info);
           LOGGER.info("Shutting Down the Service due to deadlock problem...!");
+          // We should trigger pager duty alert.
           System.exit(0);
         } else {
           LOGGER.info("NO deadlocks");

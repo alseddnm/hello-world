@@ -45,6 +45,9 @@ public class HelloWorldController {
   public ResponseEntity<FibonacciSeries> fib(@PathVariable(value = "number") int number) {
     LOGGER.debug("Rest call to create fibonacci numbers.");
     List<Integer> fibonacciSeries = FibonacciService.buildFibonacciSeries(number);
+    if(fibonacciSeries==null || fibonacciSeries.isEmpty()) {
+      return ResponseEntity.noContent().build();
+    }
     return new ResponseEntity<>(new FibonacciSeries(number, fibonacciSeries), HttpStatus.OK);
   }
 
