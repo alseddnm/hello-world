@@ -5,11 +5,12 @@ package com.fun.coding.rest;
  */
 
 import java.util.List;
-import com.fun.coding.deadlock.MonitorService;
 import com.fun.coding.model.FibonacciSeries;
 import com.fun.coding.model.Text;
 import com.fun.coding.model.WordCounter;
 import com.fun.coding.service.FibonacciService;
+import com.fun.coding.service.IMonitorService;
+import com.fun.coding.service.MonitorService;
 import com.fun.coding.service.WordsOccurrencesService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,7 +28,7 @@ public class HelloWorldController {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(HelloWorldController.class);
 
-  private final MonitorService monitorService;
+  private final IMonitorService monitorService;
 
   @Autowired
   public HelloWorldController(MonitorService monitorService) {
