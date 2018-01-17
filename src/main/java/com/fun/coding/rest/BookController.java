@@ -36,7 +36,7 @@ public class BookController {
 
   /**
    * Get book requests.
-   * @param isbn    The isbn of the book.
+   * @param isbn  The isbn of the book.
    * @return  The Book.
    */
   @RequestMapping(method = RequestMethod.GET, value = "/{isbn}")
@@ -66,7 +66,7 @@ public class BookController {
 
   /**
    * Processes delete book requests.
-   * @param isbn    The isbn of the deleted book.
+   * @param isbn  The isbn of the deleted book.
    * @return
    */
   @RequestMapping(method = RequestMethod.DELETE, value = "/{isbn}")
