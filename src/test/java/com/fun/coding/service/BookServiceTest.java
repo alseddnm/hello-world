@@ -54,15 +54,15 @@ public class BookServiceTest {
 
   @Test
   public void findById() {
-    Book person = BookTestUtil.createModelObject(ISBN, TITLE, AUTHOR);
-    when(bookRepositoryMock.findOne(ISBN)).thenReturn(person);
+    Book book = BookTestUtil.createModelObject(ISBN, TITLE, AUTHOR);
+    when(bookRepositoryMock.findOne(ISBN)).thenReturn(book);
 
     Book returned = bookService.findByIsbn(ISBN);
 
     verify(bookRepositoryMock, times(1)).findOne(ISBN);
     verifyNoMoreInteractions(bookRepositoryMock);
 
-    assertEquals(person, returned);
+    assertEquals(book, returned);
   }
 
   @Test
