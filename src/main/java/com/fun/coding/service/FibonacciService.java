@@ -6,7 +6,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Created by nizar on 1/12/18.
+ * The Fibonacci Service
+ * The class has one method, which accepts a number N  and returns a JSON array with the first N Fibonacci numbers.
+ * @author Nizar
  */
 public class FibonacciService {
 
@@ -17,29 +19,34 @@ public class FibonacciService {
   }
 
   /**
-   * @param n
-   * @return
+   * Returns a list contains the first N Fibonacci numbers.
+   *
+   * @param number the Fibonacci number
+   * @return the List<Integer>
    */
-  public static List<Integer> buildFibonacciSeries(int n) {
+  public static List<Integer> buildFibonacciSeries(int number) {
     int firstIndex = 0, secondIndex = 1;
     LOGGER.info("Building Fibonacci Series ...!");
     List<Integer> series = new ArrayList<>();
 
-    if (n < 0) return series; // empty list;
+    if (number < 0) return series; // empty list;
 
-    if (n == 0) {
+    if (number == 0) {
       series.add(firstIndex);
       return series;
     }
     series.add(firstIndex); // add 0
     series.add(secondIndex); // add 1
-    calculateFibonacci(firstIndex, secondIndex, n - 2, series); //number-2 because 2 numbers are already printed
+    calculateFibonacci(firstIndex, secondIndex, number - 2, series); //number-2 because 2 numbers are already printed
     return series;
   }
 
   /**
-   * @param
-   * @return
+   * recursive method
+   * @param firstIndex
+   * @param secondIndex
+   * @param count
+   * @param series
    */
   private static void calculateFibonacci(int firstIndex, int secondIndex, int count, List<Integer> series) {
     if (count > 0) {

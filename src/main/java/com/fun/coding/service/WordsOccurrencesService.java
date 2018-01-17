@@ -46,7 +46,7 @@ public class WordsOccurrencesService {
 
   /**
    * This method parse the text
-   * The code assumes the that “space” is the only word delimiter
+   * The code assumes the that “space” is the only words delimiter
    * @param text
    * @param wordsMap
    */
