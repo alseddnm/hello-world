@@ -13,7 +13,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 /**
- * Created by nizar on 1/13/18.
+ * This implementation of the MonitorService interface.
+ *
+ * @author Nizar
  */
 @Component
 public class MonitorService implements IMonitorService {
@@ -21,49 +23,64 @@ public class MonitorService implements IMonitorService {
   private static Logger LOGGER = LoggerFactory.getLogger(MonitorService.class);
   private final int monitorEvery = 60; // run the monitor service every 5 seconds. Should be configurable.
   private ScheduledExecutorService deadlockDetector = Executors.newScheduledThreadPool(1);
-  private Object lock1 = new Object();
-  private Object lock2 = new Object();
+  private Object resource1 = new Object();
+  private Object resource2 = new Object();
 
 
   private Semaphore threadLock = new Semaphore(1);
 
-  /**
-   *
-   */
+  //Thread1.
+  //It tries to lock resource1 then resource2
   private Thread thread1 = new Thread(new Runnable() {
     @Override
     public void run() {
-      synchronized (lock1) {
-        LOGGER.info("Thread1 acquired lock1");
+      //This thread locks resource 2 right away
+      synchronized (resource1) {
+        LOGGER.info("Thread1 acquired resource1");
         try {
+          //Pause for a bit
           TimeUnit.MILLISECONDS.sleep(50);
         } catch (InterruptedException ignore) {
         }
-        synchronized (lock2) {
-          LOGGER.info("Thread1 acquired lock2");
+        //Now wait till we can get a lock on resource 2
+        synchronized (resource2) {
+          LOGGER.info("Thread1 acquired resource2");
         }
       }
     }
 
   });
 
-  /**
-   *
-   */
+  //thread2.
+  //It tries to lock resource2 then resource1
   private Thread thread2 = new Thread(new Runnable() {
     @Override
     public void run() {
-      synchronized (lock2) {
-        System.out.println("Thread2 acquired lock2");
-        synchronized (lock1) {
-          System.out.println("Thread2 acquired lock1");
+      //This thread locks resource 2 right away
+      synchronized (resource2) {
+        LOGGER.info("Thread2 acquired resource2");
+        try{
+          // it pauses for a bit
+          Thread.sleep(50);
+        } catch (InterruptedException e){}
+
+        //Then it tries to lock resource1.
+        //Thread 1 locked resource1, and
+        //won't release it till it gets a lock on resource2.
+        //This thread holds the lock on resource2, and won't
+        //release it till it gets resource1.
+        //Neither thread can run,
+        //and the program freezes up.
+        synchronized(resource1){
+          LOGGER.info("Thread 2: locked resource 1");
         }
       }
     }
   });
 
   /**
-   *
+   * Start the two threads.
+   * If all goes as planned, deadlock will occur,
    */
   public void start() {
     try {
@@ -105,7 +122,7 @@ public class MonitorService implements IMonitorService {
   }
 
   /**
-   *
+   * shutdown dead lock detector
    */
   public void stop() {
     try {
@@ -118,7 +135,9 @@ public class MonitorService implements IMonitorService {
   }
 
   /**
-   *
+   * Dead lock detector thread runs every 5 second
+   * to monitor the memory, and if it detects a deadlock problem
+   * capture the details, add to the log and gracefully shutdown the service
    */
   private class DeadLockDetectorThread implements Runnable {
     @Override

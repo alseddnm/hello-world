@@ -5,7 +5,9 @@ import com.fun.coding.exception.BookNotFoundException;
 import com.fun.coding.model.Book;
 
 /**
- * Declares methods used to obtain and modify book information.
+ * The Book service uses to create, obtain and delete book information
+ * Declares methods used to find,create and delete book information.
+ *
  * @author Nizar
  */
 public interface IBookService {
