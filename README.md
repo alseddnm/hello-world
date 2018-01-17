@@ -113,7 +113,7 @@ RESPONSE: HTTP 200 (OK)
 
 * REST endpoint that creates two threads that become deadlocked with each other
 * Monitor the two threads and detect the deadlock
-* Logging the details and gracefully shutdown the service, in case the service detects a deadlock. 
+* Logging the details and gracefully shutdown the service, in case a deadlock occurred. 
 
 ```
 GET /monitor
