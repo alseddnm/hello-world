@@ -1,4 +1,4 @@
-package com.fun.coding.deadlock;
+package com.fun.coding.service;
 
 import java.lang.management.ManagementFactory;
 import java.lang.management.ThreadInfo;
@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
  * Created by nizar on 1/13/18.
  */
 @Component
-public class MonitorService {
+public class MonitorService implements IMonitorService {
 
   private static Logger LOGGER = LoggerFactory.getLogger(MonitorService.class);
   private final int monitorEvery = 60; // run the monitor service every 5 seconds. Should be configurable.
