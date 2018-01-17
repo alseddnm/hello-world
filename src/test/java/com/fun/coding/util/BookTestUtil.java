@@ -7,7 +7,7 @@ import com.fun.coding.model.Book;
  * Created by nizar on 1/16/18.
  */
 public class BookTestUtil {
-  public static BookObject createBookDTO(int isbn, String title, String author) {
+  public static BookObject createBookObject(int isbn, String title, String author) {
     BookObject dto = new BookObject();
 
     dto.setIsbn(isbn);

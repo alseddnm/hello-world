@@ -1,8 +1,8 @@
 package com.fun.coding.service;
 
-import com.fun.coding.model.BookObject;
 import com.fun.coding.exception.BookNotFoundException;
 import com.fun.coding.model.Book;
+import com.fun.coding.model.BookObject;
 import com.fun.coding.repository.BookRepository;
 import com.fun.coding.util.BookTestUtil;
 import org.junit.Before;
@@ -10,8 +10,8 @@ import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 
 
-import static org.mockito.Mockito.*;
 import static junit.framework.Assert.assertEquals;
+import static org.mockito.Mockito.*;
 
 /**
  * Created by nizar on 1/16/18.
@@ -36,7 +36,7 @@ public class BookServiceTest {
 
   @Test
   public void createBookTest() {
-    BookObject created = BookTestUtil.createBookDTO(0, TITLE, AUTHOR);
+    BookObject created = BookTestUtil.createBookObject(0, TITLE, AUTHOR);
     Book persisted = BookTestUtil.createModelObject(ISBN, TITLE, AUTHOR);
 
     when(bookRepositoryMock.save(any(Book.class))).thenReturn(persisted);
@@ -79,6 +79,17 @@ public class BookServiceTest {
     assertEquals(deleted, returned);
   }
 
+  @Test(expected = BookNotFoundException.class)
+  public void updateWhenPersonIsNotFound() throws BookNotFoundException {
+    BookObject deleted = BookTestUtil.createBookObject(ISBN, TITLE, AUTHOR);
+
+    when(bookRepositoryMock.findOne(deleted.getIsbn())).thenReturn(null);
+
+    bookService.deleteBook(ISBN);
+
+    verify(bookRepositoryMock, times(1)).findOne(deleted.getIsbn());
+    verifyNoMoreInteractions(bookRepositoryMock);
+  }
 
   private void assertBook(BookObject expected, Book actual) {
     assertEquals(expected.getIsbn(), actual.getIsbn());
