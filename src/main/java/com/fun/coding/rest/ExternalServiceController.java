@@ -22,6 +22,11 @@ public class ExternalServiceController {
 
   private final String uri = "https://jsonplaceholder.typicode.com/posts";
 
+  /**
+   * GET /users.
+   *
+   * @return  ResponseEntity<List<User>> returns a JSON array with the list of users.
+   */
   @RequestMapping(method = RequestMethod.GET)
   public ResponseEntity<List<User>> listUsers() {
     LOGGER.debug("Calling external service.");
