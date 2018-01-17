@@ -25,7 +25,7 @@ public class WordsOccurrencesService {
    * If null/empty will return an empty list.
    *
    * @param text
-   * @return
+   * @return the List<WordCounter>
    */
   public static List<WordCounter> parseAndSortWordsAlphabetically(String text) {
     if (null == text || text.trim().isEmpty()) return new ArrayList<>(); // return an empty list.
@@ -45,10 +45,11 @@ public class WordsOccurrencesService {
   }
 
   /**
-   * This method parse the text
-   * The code assumes the that “space” is the only words delimiter
-   * @param text
-   * @param wordsMap
+   * This method count the number of occurrences if each word in a text
+   *
+   * The code assumes spaces are the only words delimiter
+   * @param text the input String, the text paragraph
+   * @param wordsMap The Map<String,WordCounter>
    */
   private static void addWordsToMap(String text, Map<String, WordCounter> wordsMap) {
     StringBuffer word = new StringBuffer();
