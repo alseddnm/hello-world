@@ -57,7 +57,7 @@ public class BookServiceTest {
     Book book = TestUtil.createModelObject(ISBN, TITLE, AUTHOR);
     when(bookRepositoryMock.findOne(ISBN)).thenReturn(book);
 
-    Book returned = bookService.findByIsbn(ISBN);
+    Book returned = bookService.findByISBN(ISBN);
 
     verify(bookRepositoryMock, times(1)).findOne(ISBN);
     verifyNoMoreInteractions(bookRepositoryMock);
