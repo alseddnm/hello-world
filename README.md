@@ -15,7 +15,7 @@ This application is packaged as a jar which has Tomcat embedded. You run it usin
 or
         gradle clean assemble bootRun
 ```
-* Check the stdout or /var/log/hello-world.log file to make sure no exceptions are thrown
+* Check the stdout or /hello-world.log file (in the project root folder /hello-world) to make sure no exceptions are thrown
 
 Once the application runs you should see something like this
 
