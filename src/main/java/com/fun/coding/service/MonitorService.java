@@ -10,6 +10,7 @@ import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 /**
@@ -21,9 +22,21 @@ import org.springframework.stereotype.Component;
 public class MonitorService implements IMonitorService {
 
   private static Logger LOGGER = LoggerFactory.getLogger(MonitorService.class);
-  private final int monitorEvery = 60; // run the monitor service every 5 seconds. Should be configurable.
+
+  @Value("${monitor.run.every}")
+  private int monitorEvery; // run the monitor service every 5 seconds, configurable value.
+
+  @Value("${thread1.delay}")
+  private int thread1Delay;
+
+  @Value("${thread2.delay}")
+  private int thread2Delay;
+
+
   private ScheduledExecutorService deadlockDetector = Executors.newScheduledThreadPool(1);
+
   private Object resource1 = new Object();
+
   private Object resource2 = new Object();
 
 
@@ -36,10 +49,10 @@ public class MonitorService implements IMonitorService {
     public void run() {
       //This thread locks resource 2 right away
       synchronized (resource1) {
-        LOGGER.info("Thread1 acquired resource1");
+        LOGGER.info("Thread1 acquired resource1 delay time {} milliseconds",thread1Delay);
         try {
           //Pause for a bit
-          TimeUnit.MILLISECONDS.sleep(50);
+          TimeUnit.MILLISECONDS.sleep(thread1Delay);
         } catch (InterruptedException ignore) {
         }
         //Now wait till we can get a lock on resource 2
@@ -58,10 +71,10 @@ public class MonitorService implements IMonitorService {
     public void run() {
       //This thread locks resource 2 right away
       synchronized (resource2) {
-        LOGGER.info("Thread2 acquired resource2");
+        LOGGER.info("Thread2 acquired resource2 delay time {} milliseconds",thread2Delay);
         try{
           // it pauses for a bit
-          Thread.sleep(50);
+          Thread.sleep(thread2Delay);
         } catch (InterruptedException e){}
 
         //Then it tries to lock resource1.
@@ -88,7 +101,8 @@ public class MonitorService implements IMonitorService {
       thread1.start();
       thread2.start();
 
-      // monitor job will start after 2 seconds and run every 5 seconds.
+      // monitor job will start after x seconds and run every y seconds.
+      LOGGER.info("scheduler runs every  {} seconds",monitorEvery);
       deadlockDetector.scheduleAtFixedRate(new DeadLockDetectorThread(), 2, monitorEvery, TimeUnit.SECONDS);
     } catch (InterruptedException e) {
       LOGGER.error("Interrupted while starting the Monitor thread.");
@@ -136,7 +150,7 @@ public class MonitorService implements IMonitorService {
 
   /**
    * Dead lock detector thread runs every 5 second
-   * to monitor the memory, and if it detects a deadlock problem
+   * monitoring, and if it detects a deadlock problem
    * capture the details, add to the log and gracefully shutdown the service
    */
   private class DeadLockDetectorThread implements Runnable {
@@ -150,7 +164,7 @@ public class MonitorService implements IMonitorService {
           ThreadInfo[] info = bean.getThreadInfo(threadIds);
           logDeadlockAndQuit(bean, threadIds, info);
           LOGGER.info("Shutting Down the Service due to deadlock problem...!");
-          // We should trigger pager duty alert.
+          // We should trigger pager duty alert.8
           System.exit(0);
         } else {
           LOGGER.info("NO deadlocks");

@@ -42,7 +42,7 @@ public class BookController {
   @RequestMapping(method = RequestMethod.GET, value = "/{isbn}")
   public ResponseEntity<Book> findBook(@PathVariable int isbn) {
     LOGGER.debug("REST request to retrieve Book : {}", isbn);
-    Book book = bookService.findByIsbn(isbn);
+    Book book = bookService.findByISBN(isbn);
     if (book == null) {
       throw new BookNotFoundException(isbn);
     }

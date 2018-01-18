@@ -4,7 +4,7 @@ import com.fun.coding.exception.BookNotFoundException;
 import com.fun.coding.model.Book;
 import com.fun.coding.model.BookObject;
 import com.fun.coding.repository.BookRepository;
-import com.fun.coding.util.BookTestUtil;
+import com.fun.coding.util.TestUtil;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
@@ -36,8 +36,8 @@ public class BookServiceTest {
 
   @Test
   public void createBookTest() {
-    BookObject created = BookTestUtil.createBookObject(0, TITLE, AUTHOR);
-    Book persisted = BookTestUtil.createModelObject(ISBN, TITLE, AUTHOR);
+    BookObject created = TestUtil.createBookObject(0, TITLE, AUTHOR);
+    Book persisted = TestUtil.createModelObject(ISBN, TITLE, AUTHOR);
 
     when(bookRepositoryMock.save(any(Book.class))).thenReturn(persisted);
 
@@ -53,8 +53,8 @@ public class BookServiceTest {
 
 
   @Test
-  public void findById() {
-    Book book = BookTestUtil.createModelObject(ISBN, TITLE, AUTHOR);
+  public void findByISBN() {
+    Book book = TestUtil.createModelObject(ISBN, TITLE, AUTHOR);
     when(bookRepositoryMock.findOne(ISBN)).thenReturn(book);
 
     Book returned = bookService.findByIsbn(ISBN);
@@ -67,7 +67,7 @@ public class BookServiceTest {
 
   @Test
   public void deleteBookTest() throws BookNotFoundException {
-    Book deleted = BookTestUtil.createModelObject(ISBN, TITLE, AUTHOR);
+    Book deleted = TestUtil.createModelObject(ISBN, TITLE, AUTHOR);
     when(bookRepositoryMock.findOne(ISBN)).thenReturn(deleted);
 
     Book returned = bookService.deleteBook(ISBN);
@@ -81,7 +81,7 @@ public class BookServiceTest {
 
   @Test(expected = BookNotFoundException.class)
   public void updateWhenPersonIsNotFound() throws BookNotFoundException {
-    BookObject deleted = BookTestUtil.createBookObject(ISBN, TITLE, AUTHOR);
+    BookObject deleted = TestUtil.createBookObject(ISBN, TITLE, AUTHOR);
 
     when(bookRepositoryMock.findOne(deleted.getIsbn())).thenReturn(null);
 

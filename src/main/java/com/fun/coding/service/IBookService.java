@@ -17,7 +17,7 @@ public interface IBookService {
    * @param isbn    The isbn of the wanted book.
    * @return  The found book. If no book is found, this method returns null.
    */
-  Book findByIsbn(int isbn);
+  Book findByISBN(int isbn);
 
   /**
    * Deletes a book.

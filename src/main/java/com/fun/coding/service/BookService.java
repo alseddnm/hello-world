@@ -23,7 +23,7 @@ public class BookService implements IBookService{
   private BookRepository bookRepository;
 
   @Override
-  public Book findByIsbn(int isbn) {
+  public Book findByISBN(int isbn) {
     LOGGER.debug("Finding book by isbn: " + isbn);
     return bookRepository.findOne(isbn);
   }
