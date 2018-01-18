@@ -12,25 +12,28 @@ import com.fun.coding.model.Book;
  */
 public interface IBookService {
 
-  /**
-   * Finds book by id.
-   * @param isbn    The isbn of the wanted book.
-   * @return  The found book. If no book is found, this method returns null.
-   */
+ /**
+  * Finds book by id.
+  *
+  * @param isbn  The isbn of the wanted book.
+  * @return a {@link Book}
+  */
   Book findByISBN(int isbn);
 
   /**
    * Deletes a book.
+   * Return the deleted book.
+   *
    * @param isbn  The isbn the deleted book.
-   * @return  The deleted book.
-   * @throws BookNotFoundException  if no book is found with the given isbn.
+   * @return  a {@link Book}
+   * @throws {@link BookNotFoundException}  if no book is found with the given isbn.
    */
   Book deleteBook(int isbn) throws BookNotFoundException;
 
   /**
    * Creates a new book.
    * @param created   The information of the created book.
-   * @return  The created book.
+   * @return  a {@link Book}
    */
   Book createBook(BookObject created);
 

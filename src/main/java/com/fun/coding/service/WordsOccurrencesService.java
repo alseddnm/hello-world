@@ -25,7 +25,7 @@ public class WordsOccurrencesService {
    * If null/empty will return an empty list.
    *
    * @param text
-   * @return the List<WordCounter>
+   * @return a {@link List} with a response type of {@link WordCounter}
    */
   public static List<WordCounter> parseAndSortWordsAlphabetically(String text) {
     if (null == text || text.trim().isEmpty()) return new ArrayList<>(); // return an empty list.

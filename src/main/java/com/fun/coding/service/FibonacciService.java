@@ -22,7 +22,7 @@ public class FibonacciService {
    * Returns a list contains the first N Fibonacci numbers.
    *
    * @param number the Fibonacci number
-   * @return the List<Integer>
+   * @return a {@link List} with a response type of {@link Integer}
    */
   public static List<Integer> buildFibonacciSeries(int number) {
     int firstIndex = 0, secondIndex = 1;
@@ -42,11 +42,7 @@ public class FibonacciService {
   }
 
   /**
-   * recursive method
-   * @param firstIndex
-   * @param secondIndex
-   * @param count
-   * @param series
+   *
    */
   private static void calculateFibonacci(int firstIndex, int secondIndex, int count, List<Integer> series) {
     if (count > 0) {
