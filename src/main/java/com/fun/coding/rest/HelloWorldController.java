@@ -43,8 +43,10 @@ public class HelloWorldController {
   /**
    * GET /fibonacci/[number].
    *
+   * Returns a JSON array with the first N Fibonacci numbers.
+   *
    * @param number  accepts an integer a number
-   * @return  ResponseEntity<FibonacciSeries> returns a JSON array with the first N Fibonacci numbers.
+   * @return a {@link ResponseEntity} with a response type of {@link FibonacciSeries}
    */
   @RequestMapping("/fibonacci/{number}")
   public ResponseEntity<FibonacciSeries> fib(@PathVariable(value = "number") int number) {
@@ -59,9 +61,10 @@ public class HelloWorldController {
   /**
    * POST /words/occurrences.
    *
+   * This API returns a JSON array of objects, which represent the unique words from the supplied paragraph along with a count of the number of occurrences
+   *
    * @param text  Accepts a JSON object containing a paragraph of text.
-   * @return  ResponseEntity<List<WordCounter>> returns a JSON array of objects,
-   *          represent the unique words from the supplied paragraph along with a count of the number of occurrences
+   * @return a {@link ResponseEntity} with a response type of {@link List<WordCounter>}
    */
   @RequestMapping(value = "/words/occurrences", method = RequestMethod.POST)
   public ResponseEntity<List<WordCounter>> wordOccurrences(@RequestBody Text text) {
@@ -72,11 +75,12 @@ public class HelloWorldController {
 
   /**
    * GET /monitor.
+   *
    * Creates two threads that become deadlocked with each other.
    * Use the api to monitor the two threads and detect the deadlock,
    * logging the details and gracefully shutdown the service, in case a deadlock occurred
    *
-   * @return  ResponseEntity<String>
+   * @return a {@link ResponseEntity} with a response type of {@link String}
    */
   @RequestMapping("/monitor")
   public ResponseEntity<String> monitorDeadLocks() {

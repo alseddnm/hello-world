@@ -35,9 +35,12 @@ public class BookController {
   }
 
   /**
+   * GET /books/[isbn]
+   *
    * Get book requests.
+   *
    * @param isbn  The isbn of the book.
-   * @return  The Book.
+   * @return a {@link ResponseEntity} with a response type of {@link Book}
    */
   @RequestMapping(method = RequestMethod.GET, value = "/{isbn}")
   public ResponseEntity<Book> findBook(@PathVariable int isbn) {
@@ -50,12 +53,16 @@ public class BookController {
   }
 
   /**
+   * POST /books
+   * Body json payload {@link Book}
+   *
    * Create book requests.
+   *
    * @param bookObject
-   * @return  The created book.
+   * @return a {@link ResponseEntity} with a response type of {@link Book}
    */
   @RequestMapping(method = RequestMethod.POST)
-  public ResponseEntity<?> addBook(@RequestBody BookObject bookObject) {
+  public ResponseEntity<Book> addBook(@RequestBody BookObject bookObject) {
     LOGGER.debug("REST request to create Book : {}", bookObject.getIsbn());
     Book result = bookService.createBook(bookObject);
     if (result == null) {
@@ -65,12 +72,15 @@ public class BookController {
   }
 
   /**
-   * Processes delete book requests.
+   * DELETE /books/[isbn]
+   *
+   * Delete book requests.
+   *
    * @param isbn  The isbn of the deleted book.
-   * @return
+   * @return a {@link ResponseEntity} with a response type of {@link String}
    */
   @RequestMapping(method = RequestMethod.DELETE, value = "/{isbn}")
-  public ResponseEntity<?> deleteBook(@PathVariable int isbn) {
+  public ResponseEntity<String> deleteBook(@PathVariable int isbn) {
     LOGGER.debug("REST request to delete Book : {}", isbn);
     final String result = "{\"isbn\": %d}";
     try {
