@@ -23,8 +23,11 @@ public class MonitorService implements IMonitorService {
 
   private static Logger LOGGER = LoggerFactory.getLogger(MonitorService.class);
 
+  @Value("${monitor.start.after}")
+  private int monitorStartAfter; // run the monitor service after y seconds, configurable value.
+
   @Value("${monitor.run.every}")
-  private int monitorEvery; // run the monitor service every 5 seconds, configurable value.
+  private int monitorEvery; // run the monitor service every x seconds, configurable value.
 
   @Value("${thread1.delay}")
   private int thread1Delay;
@@ -44,7 +47,7 @@ public class MonitorService implements IMonitorService {
 
   //Thread1.
   //It tries to lock resource1 then resource2
-  private Thread thread1 = new Thread(new Runnable() {
+  Thread thread1 = new Thread(new Runnable() {
     @Override
     public void run() {
       //This thread locks resource 2 right away
@@ -66,7 +69,7 @@ public class MonitorService implements IMonitorService {
 
   //thread2.
   //It tries to lock resource2 then resource1
-  private Thread thread2 = new Thread(new Runnable() {
+  Thread thread2 = new Thread(new Runnable() {
     @Override
     public void run() {
       //This thread locks resource 2 right away
@@ -102,8 +105,8 @@ public class MonitorService implements IMonitorService {
       thread2.start();
 
       // monitor job will start after x seconds and run every y seconds.
-      LOGGER.info("scheduler runs every  {} seconds",monitorEvery);
-      deadlockDetector.scheduleAtFixedRate(new DeadLockDetectorThread(), 2, monitorEvery, TimeUnit.SECONDS);
+      LOGGER.info("scheduler start after {} and runs every  {} seconds",monitorStartAfter,monitorEvery);
+      deadlockDetector.scheduleAtFixedRate(new DeadLockDetectorThread(), monitorStartAfter, monitorEvery, TimeUnit.SECONDS);
     } catch (InterruptedException e) {
       LOGGER.error("Interrupted while starting the Monitor thread.");
     } finally {
@@ -164,7 +167,7 @@ public class MonitorService implements IMonitorService {
           ThreadInfo[] info = bean.getThreadInfo(threadIds);
           logDeadlockAndQuit(bean, threadIds, info);
           LOGGER.info("Shutting Down the Service due to deadlock problem...!");
-          // We should trigger pager duty alert.8
+          // We should trigger pager duty alert, to notify the ops guy -> then exit
           System.exit(0);
         } else {
           LOGGER.info("NO deadlocks");
@@ -176,4 +179,5 @@ public class MonitorService implements IMonitorService {
       }
     }
   }
+
 }
