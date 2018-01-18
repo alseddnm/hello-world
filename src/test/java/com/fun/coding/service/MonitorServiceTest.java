@@ -42,6 +42,6 @@ public class MonitorServiceTest {
     Thread.sleep(2000); // pause for 2 seconds, for the deadlock detector thread to start -> then exit
     // Although system.exit(0) got executed I do still see java process is running, I had to do execute kill -9
     // if you run this test , do (ps -ef | grep java)
-    // -> jstack (PID) if you see thread waiting -> execute -> kill -9 (PID)
+    // -> jstack (PID) if you see deadlock issue -> execute -> kill -9 (PID)
   }
 }
