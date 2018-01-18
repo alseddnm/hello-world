@@ -43,6 +43,11 @@ Here are some endpoints you can call:
 
 ```
 http://localhost:8080/health
+
+curl http://localhost:8080/health
+
+RESPONSE
+{"status":"UP"}
 ```
 
 ### Retrieve N Fibonacci numbers
@@ -51,6 +56,8 @@ http://localhost:8080/health
 
 ```
 GET /fibonacci/[number]
+
+curl http://localhost:8080/fibonacci/5
 
 REQUEST:
 /fibonacci/5
@@ -79,6 +86,8 @@ RESPONSE: HTTP 200 (OK)
 POST /words/occurrences
 Accept: application/json
 Content-Type: application/json
+
+curl -H "Content-Type: application/json" -X POST -d '{"content": "yes a no foo a foo ta yes no"}' http://localhost:8080/words/occurrences
 
 REQUEST: {"content": "yes a no foo a foo ta yes no"}
 
@@ -118,6 +127,8 @@ RESPONSE: HTTP 200 (OK)
 ```
 GET /monitor
 
+curl http://localhost:8080/monitor
+
 RESPONSE: HTTP 200 (OK)
 
 Monitoring...!
@@ -132,6 +143,8 @@ Monitoring...!
 POST /books
 Accept: application/json
 Content-Type: application/json
+
+curl -H "Content-Type: application/json" -X POST -d '{ "isbn": 123,"title": "title","author": "author"}' http://localhost:8080/books
 
 REQUEST:
 {
@@ -154,6 +167,8 @@ RESPONSE: HTTP 201 (CREATED)
 ```
 GET /books/[isbn]
 
+curl http://localhost:8080/books/123
+
 REQUEST:
 /books/123
 
@@ -171,6 +186,8 @@ RESPONSE: HTTP 200 (OK)
 ```
 DELETE /books/[isbn]
 
+curl  -X DELETE  http://localhost:8080/books/123
+
 REQUEST:
 /books/123
 
@@ -185,6 +202,8 @@ RESPONSE: HTTP 200 (OK)
 
 ```
 GET /users
+
+curl http://localhost:8080/users
 
 Response: HTTP 200
 Content: JSON object

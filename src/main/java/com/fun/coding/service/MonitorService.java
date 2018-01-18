@@ -23,6 +23,9 @@ public class MonitorService implements IMonitorService {
 
   private static Logger LOGGER = LoggerFactory.getLogger(MonitorService.class);
 
+  @Value("${monitor.service.exit}")
+  private boolean isExit; // default value is true, disable this flag if you want to exits the service, in case deadlock is detected.
+
   @Value("${monitor.start.after}")
   private int monitorStartAfter; // run the monitor service after y seconds, configurable value.
 
@@ -143,7 +146,7 @@ public class MonitorService implements IMonitorService {
    */
   public void stop() {
     try {
-      LOGGER.info("shutdown deadLock detector");
+      LOGGER.info("shutdown the scheduler");
       deadlockDetector.shutdownNow();
       deadlockDetector.awaitTermination(5, TimeUnit.SECONDS);
     } catch (InterruptedException e) {
@@ -166,9 +169,12 @@ public class MonitorService implements IMonitorService {
         if (threadIds != null) {
           ThreadInfo[] info = bean.getThreadInfo(threadIds);
           logDeadlockAndQuit(bean, threadIds, info);
-          LOGGER.info("Shutting Down the Service due to deadlock problem...!");
-          // We should trigger pager duty alert, to notify the ops guy -> then exit
-          System.exit(0);
+          // We should trigger pager duty alert, to notify the ops folks
+          LOGGER.info("Exit flag {}:",isExit);
+          if(isExit) {
+            LOGGER.info("Shutting Down the Service due to deadlock problem...!");
+            System.exit(0);
+          }
         } else {
           LOGGER.info("NO deadlocks");
         }
