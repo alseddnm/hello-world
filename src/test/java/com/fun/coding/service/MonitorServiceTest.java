@@ -17,7 +17,8 @@ import static junit.framework.Assert.assertEquals;
 /**
  * Created by nizar on 1/17/18.
  */
-@RunWith(SpringJUnit4ClassRunner.class)
+// disable this test for now
+//@RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes = Application.class)
 public class MonitorServiceTest {
 
@@ -30,7 +31,7 @@ public class MonitorServiceTest {
    * Wrote this test to verify deadlock is detected.
    * @throws InterruptedException
    */
-  @Test
+  //@Test
   public void monitorTest() throws InterruptedException {
     monitorService.start();
     // run scheduler every5 seconds
